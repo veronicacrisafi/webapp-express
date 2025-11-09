@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const moviesRouter = require("./router/movies");
 const connection = require("./database/connections");
 
 const port = 3000;
@@ -14,9 +15,4 @@ app.get("/", (req, res) => {
   res.send("Benvenuto nel mio Server!");
 });
 
-//collegamento con le query
-const query = require("./database/query");
-//rotta index
-app.get("/index", query.index);
-//rotta show
-app.get("/index/:id", query.show);
+app.use("/movies", moviesRouter);
