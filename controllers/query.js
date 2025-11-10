@@ -1,4 +1,4 @@
-const connection = require("./connections");
+const connection = require("../database/connections");
 
 function index(req, res) {
   const sql = `SELECT * FROM movies`;

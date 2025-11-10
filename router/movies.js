@@ -1,7 +1,7 @@
 const express = require("express");
+const query = require("../controllers/query");
 const router = express.Router();
-//collegamento con le query
-const query = require("../database/query");
+
 //rotta index
 router.get("/", query.index);
 //rotta show
