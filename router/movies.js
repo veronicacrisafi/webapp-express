@@ -8,5 +8,7 @@ router.get("/", query.index);
 router.get("/:id", query.show);
 //rotta destroy
 router.delete("/:id", query.destroy);
+//rotta store
+router.post("/", query.storeMovies);
 
 module.exports = router;

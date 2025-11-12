@@ -33,6 +33,26 @@ function show(req, res) {
   });
 }
 
+function storeMovies(req, res) {
+  const { title, director, genre, release_year, abstract, image } = req.body;
+  const sql = `INSERT INTO movies (title, director, genre, release_year, abstract, image) VALUES (?,?,?,?,?,?)`;
+  connection.query(
+    sql,
+    [title, director, genre, release_year, abstract, image],
+    (err, results) => {
+      if (err)
+        return res
+          .status(500)
+          .json({ error: "Non è stato possibile inserire il nuovo film" });
+
+      res.status(201).json({
+        message: "film inserito!",
+        id: results.insertId,
+      });
+    }
+  );
+}
+
 function destroy(req, res) {
   const id = req.params.id;
   const sql = `DELETE FROM movies WHERE id = ?`;
@@ -43,4 +63,4 @@ function destroy(req, res) {
   });
 }
 
-module.exports = { index, show, destroy };
+module.exports = { index, show, destroy, storeMovies };

@@ -6,6 +6,7 @@ const connection = require("./database/connections");
 const port = 3000;
 
 app.use(express.static("public"));
+app.use(express.json());
 
 app.listen(port, () => {
   console.log(`In ascolto in http://localhost:${port}`);
