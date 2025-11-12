@@ -11,12 +11,25 @@ function index(req, res) {
 function show(req, res) {
   const id = req.params.id;
 
-  const sql = `SELECT * FROM movies LEFT JOIN reviews ON reviews.movie_id = movies.id WHERE movies.id = ?`;
-  connection.query(sql, [id], (err, results) => {
-    if (err) return res.status(500).json({ error: "query fallita" });
-    if (results.length === 0)
-      return res.status(404).json({ error: "id query non trovato, riprova!" });
-    res.json(results);
+  const sqlMovies = `SELECT * FROM movies WHERE id= ?`;
+  const sqlReviews = `SELECT * FROM reviews WHERE movie_id = ?`;
+
+  connection.query(sqlMovies, [id], (errMovies, resultMovies) => {
+    if (errMovies)
+      return res.status(500).json({ error: "query movies fallita" });
+    if (resultMovies.length === 0)
+      return res
+        .status(404)
+        .json({ error: "id query movies non trovato, riprova!" });
+
+    connection.query(sqlReviews, [id], (errReviews, resultReviews) => {
+      if (errReviews)
+        return res.status(500).json({ error: "query reviews fallita" });
+
+      const movieRev = { ...resultMovies[0], reviews: resultReviews };
+
+      res.json(movieRev);
+    });
   });
 }
 
