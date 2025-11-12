@@ -6,5 +6,7 @@ const router = express.Router();
 router.get("/", query.index);
 //rotta show
 router.get("/:id", query.show);
+//rotta destroy
+router.delete("/:id", query.destroy);
 
 module.exports = router;
