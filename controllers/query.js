@@ -53,6 +53,27 @@ function storeMovies(req, res) {
   );
 }
 
+function storeReviews(req, res) {
+  const { name, vote, text } = req.body;
+  const movie_id = req.params.id;
+  const sql = `INSERT INTO reviews (movie_id,name,vote,text) VALUES (?,?,?,?)`;
+
+  connection.query(
+    sql,
+    [movie_id, name, vote, text],
+    (errReviews, resultsReviews) => {
+      if (errReviews)
+        return res.status(500).json({
+          error: "Non è stato possibile inserire la nuova recensione",
+        });
+      res.status(201).json({
+        message: "recensione inserita!",
+        id: resultsReviews.insertId,
+      });
+    }
+  );
+}
+
 function destroy(req, res) {
   const id = req.params.id;
   const sql = `DELETE FROM movies WHERE id = ?`;
@@ -63,4 +84,4 @@ function destroy(req, res) {
   });
 }
 
-module.exports = { index, show, destroy, storeMovies };
+module.exports = { index, show, destroy, storeMovies, storeReviews };
