@@ -1,10 +1,15 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const moviesRouter = require("./router/movies");
 const connection = require("./database/connections");
 
 const port = 3000;
 
+app.use(cors, {
+  origin: "http://localhost:5173/",
+  credentials: true,
+});
 app.use(express.static("public"));
 app.use(express.json());
 
